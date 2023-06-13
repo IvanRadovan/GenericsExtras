@@ -3,28 +3,38 @@ package dev.lpa.MyTestCode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public abstract class Category implements Grocery {
+public class GroceryItem implements Product {
 
     private final String name;
     private final String trademark;
-
     private double price;
 
-    private static int quantity = 0;
     private long barCode;
+    private static int quantity = 0;
 
 
-    public Category(String name, String trademark, double price) {
+    public GroceryItem(String name, String trademark, double price) {
+        quantity++;
+
         this.name = name;
         this.trademark = trademark;
         this.price = price;
-        quantity++;
 
         LocalDateTime currentDateTime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmm0000");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
         String formattedDateTime = currentDateTime.format(formatter);
-        long productionTime = Long.parseLong(formattedDateTime);
-        barCode = productionTime + quantity;
+        this.barCode = Long.parseLong(formattedDateTime + String.format("%06d", quantity));
+    }
+
+
+    @Override
+    public long getBarCode() {
+        return this.barCode;
+    }
+
+    @Override
+    public int getQuantity() {
+        return 0;
     }
 
     @Override
@@ -42,14 +52,7 @@ public abstract class Category implements Grocery {
         return price;
     }
 
-    @Override
-    public int getQuantity() {
-        return quantity;
+    public void setPrice(double price) {
+        this.price = price;
     }
-
-    @Override
-    public long getBarCode() {
-        return barCode;
-    }
-
 }
