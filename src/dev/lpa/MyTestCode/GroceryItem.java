@@ -8,33 +8,14 @@ public class GroceryItem implements Product {
     private final String name;
     private final String trademark;
     private double price;
-
-    private long barCode;
-    private static int quantity = 0;
+    private BarCode barCode;
 
 
     public GroceryItem(String name, String trademark, double price) {
-        quantity++;
-
         this.name = name;
         this.trademark = trademark;
         this.price = price;
-
-        LocalDateTime currentDateTime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
-        String formattedDateTime = currentDateTime.format(formatter);
-        this.barCode = Long.parseLong(formattedDateTime + String.format("%06d", quantity));
-    }
-
-
-    @Override
-    public long getBarCode() {
-        return this.barCode;
-    }
-
-    @Override
-    public int getQuantity() {
-        return 0;
+        this.barCode = new BarCode();
     }
 
     @Override
@@ -47,12 +28,31 @@ public class GroceryItem implements Product {
         return trademark;
     }
 
-    @Override
-    public double getPrice() {
-        return price;
-    }
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public BarCode getBarCode() {
+        return barCode;
+    }
+
+    class BarCode {
+
+        private final long code;
+        private static int quantity = 0;
+
+        private BarCode() {
+            quantity++;
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
+            String formattedDateTime = currentDateTime.format(formatter);
+            this.code = Long.parseLong(formattedDateTime + String.format("%06d", quantity));
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(code);
+        }
     }
 }
