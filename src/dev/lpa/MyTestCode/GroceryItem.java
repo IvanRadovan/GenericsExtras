@@ -2,19 +2,29 @@ package dev.lpa.MyTestCode;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Currency;
+import java.util.Locale;
 
 public class GroceryItem implements Product {
 
     private final String name;
-    private final String trademark;
-    private double price;
-    private BarCode barCode;
+    private final String unit;
+    private final String manufacturer;
+    private final double purchasePrice;
+    private double sellingPrice;
+    private final int vatRate;
+    private final String category;
+    private final BarCode barCode;
 
 
-    public GroceryItem(String name, String trademark, double price) {
+    public GroceryItem(String name, String unit, String manufacturer, double purchasePrice, double sellingPrice, int vatRate, String category) {
         this.name = name;
-        this.trademark = trademark;
-        this.price = price;
+        this.unit = unit;
+        this.manufacturer = manufacturer;
+        this.purchasePrice = purchasePrice;
+        this.sellingPrice = sellingPrice;
+        this.vatRate = vatRate;
+        this.category = category;
         this.barCode = new BarCode();
     }
 
@@ -24,17 +34,50 @@ public class GroceryItem implements Product {
     }
 
     @Override
-    public String getTrademark() {
-        return trademark;
+    public String getManufacturer() {
+        return manufacturer;
     }
 
+    @Override
+    public double getPurchasePrice() {
+        return purchasePrice;
+    }
 
-    public void setPrice(double price) {
-        this.price = price;
+    @Override
+    public double getSellingPrice() {
+        return sellingPrice;
     }
 
     public BarCode getBarCode() {
         return barCode;
+    }
+
+    @Override
+    public String getUnit() {
+        return unit;
+    }
+
+    @Override
+    public int getVatRate() {
+        return vatRate;
+    }
+
+    @Override
+    public String getCategory() {
+        return category;
+    }
+
+    @Override
+    public void setSellingPrice(double price) {
+        sellingPrice = price;
+    }
+
+    @Override
+    public String toString() {
+        return "%-10s %-10s %-10s %s %-10s %s %-10s %-10s %-10s %-10s".
+                formatted(name, unit, manufacturer, purchasePrice,
+                Currency.getInstance(Locale.getDefault()), sellingPrice,
+                Currency.getInstance(Locale.getDefault()), vatRate, category, barCode);
     }
 
     class BarCode {
@@ -44,6 +87,7 @@ public class GroceryItem implements Product {
 
         private BarCode() {
             quantity++;
+
             LocalDateTime currentDateTime = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
             String formattedDateTime = currentDateTime.format(formatter);

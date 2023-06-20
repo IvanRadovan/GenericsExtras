@@ -3,17 +3,18 @@ package dev.lpa.MyTestCode;
 public interface Product {
 
     String getName();
-    String getTrademark();
-
-    double getValue();
+    String getUnit();
+    String getManufacturer();
     double getPurchasePrice();
     double getSellingPrice();
+    int getVatRate();
+    String getCategory();
+
     void setSellingPrice(double price);
 
-    // Uncertain if these methods are necessary, due to CategoryList classes determining these types of behaviours.
-    String getGroup();
-    String getUnit();
-    int getVatRate();
-    //String getBarcode();   <---- This is is an inner class
+
+
+
+
 
 }
