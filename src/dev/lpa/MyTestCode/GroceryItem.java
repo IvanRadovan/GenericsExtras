@@ -10,6 +10,7 @@ public class GroceryItem implements Product {
     private final String name;
     private final String unit;
     private final String manufacturer;
+    private final boolean organic;
     private final double purchasePrice;
     private double sellingPrice;
     private final int vatRate;
@@ -17,10 +18,11 @@ public class GroceryItem implements Product {
     private final BarCode barCode;
 
 
-    public GroceryItem(String name, String unit, String manufacturer, double purchasePrice, double sellingPrice, int vatRate, String category) {
+    public GroceryItem(String name, String unit, String manufacturer, boolean organic, double purchasePrice, double sellingPrice, int vatRate, String category) {
         this.name = name;
         this.unit = unit;
         this.manufacturer = manufacturer;
+        this.organic = organic;
         this.purchasePrice = purchasePrice;
         this.sellingPrice = sellingPrice;
         this.vatRate = vatRate;
@@ -36,6 +38,11 @@ public class GroceryItem implements Product {
     @Override
     public String getManufacturer() {
         return manufacturer;
+    }
+
+    @Override
+    public boolean isOrganic() {
+        return organic;
     }
 
     @Override
@@ -74,8 +81,8 @@ public class GroceryItem implements Product {
 
     @Override
     public String toString() {
-        return "%-10s %-10s %-10s %s %-10s %s %-10s %-10s %-10s %-10s".
-                formatted(name, unit, manufacturer, purchasePrice,
+        return "%-10s %-10s %-10s %-10s %s %-10s %s %-10s %-10s %-10s %-10s".
+                formatted(name, unit, manufacturer, organic, purchasePrice,
                 Currency.getInstance(Locale.getDefault()), sellingPrice,
                 Currency.getInstance(Locale.getDefault()), vatRate, category, barCode);
     }

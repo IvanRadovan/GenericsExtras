@@ -1,8 +1,8 @@
 package dev.lpa.MyTestCode;
 
-public interface Category {
+public interface Category<T extends Product> {
 
-    boolean addItem();
+    boolean addItem(GroceryItem groceryItem);
     boolean removeItem();
     boolean queryItem();
     boolean updateItem();

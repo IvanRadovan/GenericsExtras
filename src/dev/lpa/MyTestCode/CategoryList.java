@@ -5,20 +5,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CategoryList<T extends Product> implements Category {
+public class CategoryList implements Category {
 
 
     private final String categoryName;
-    private final Map<String, List<T>> groceryList;
+    private final List<GroceryItem> categoryList;
 
     public CategoryList(String categoryName) {
         this.categoryName = categoryName;
-        this.groceryList = new HashMap<>();
+        this.categoryList = new ArrayList<>();
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public List<GroceryItem> getCategoryList() {
+        return categoryList;
     }
 
     @Override
-    public boolean addItem() {
-        return false;
+    public boolean addItem(GroceryItem groceryItem) {
+        if (!groceryItem.getCategory().equals(this.categoryName)) return false;
+        categoryList.add(groceryItem);
+        return true;
+
     }
 
     @Override
